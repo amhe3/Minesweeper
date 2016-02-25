@@ -31,27 +31,13 @@ public void setBombs()
 {
     int ranRow = (int) (Math.random()* NUM_ROWS);
     int ranCol = (int) (Math.random()* NUM_COLS);
-    // if(!buttons[ranRow][ranCol].contains(bombs[ranRow][ranCol]))
-    // {
-    //     bombs.add(ranRow, ranCol);
-    // }
-    for(int bombNum = 1; bombNum <=5; bombNum++)
+    for(int bombNum = 1; bombNum <= (int)(Math.random()*10)+10; bombNum++)
     {
-        if(bombNum <=5 && !bombs.contains(buttons[ranRow][ranCol]))
+        if(!bombs.contains(buttons[ranRow][ranCol]))
         {
-            bombs.add(buttons[ranRow][ranCol]);
+            bombs.add(buttons[(int) (Math.random()* NUM_ROWS)][(int) (Math.random()* NUM_COLS)]);
         }
     }
-    // int bn = 1;
-    // while(bn <= 5)
-    // {
-    //     if(bn <=5 && !bombs.contains(buttons[ranRow][ranCol]))
-    //     {
-    //         bombs.add(buttons[ranRow][ranCol]);
-    //         bn++;
-    //     }
-    //     //bn++;
-    // }
 }
 
 public void draw ()
@@ -130,13 +116,20 @@ public class MSButton
     }
     public boolean isValid(int r, int c)
     {
-        //your code here
-        return false;
+        if(r>-1 && r<21 && c>-1 && c<21)
+        {
+            return true;
+        }
+        else 
+            return false;
     }
     public int countBombs(int row, int col)
     {
         int numBombs = 0;
-        //your code here
+        if(this.isValid(row + 1, col) == true && bombs.contains(buttons[row+1][col]))
+        {
+            numBombs++;
+        }
         return numBombs;
     }
 }
