@@ -54,6 +54,9 @@ public boolean isWon()
 public void displayLosingMessage()
 {
     //your code here
+    background(0);
+    fill(255, 255, 255);
+    ellipse(200, 200, 100, 100);
 }
 public void displayWinningMessage()
 {
@@ -100,10 +103,16 @@ public class MSButton
         {
             marked = true;
         }
-        if(bombs.contains(this))
+        else if(bombs.contains(this))
         {
             displayLosingMessage();
         }
+        // else if(this.countBombs() > 0)
+        // {
+        //     this.setLabel(numBombs);
+        // }
+        else
+            this.mousePressed();
     }
 
     public void draw () 
