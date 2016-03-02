@@ -98,6 +98,14 @@ public class MSButton
         if(keyPressed == true && marked == true)
         {
             marked = false;
+            if(this.isValid(r,c-1)==true && buttons[r][c-1].isMarked()) //left
+                buttons[r][c-1].mousePressed();
+            if(this.isValid(r,c-1)==true && buttons[r][c+1].isMarked()) //right
+                buttons[r][c+1].mousePressed();
+            if(this.isValid(r,c-1)==true && buttons[r-1][c].isMarked()) //up
+                buttons[r-1][c].mousePressed();
+            if(this.isValid(r,c-1)==true && buttons[r+1][c].isMarked()) //down
+                buttons[r+1][c].mousePressed();
         }
         else if(keyPressed == true && marked == false)
         {
@@ -107,10 +115,11 @@ public class MSButton
         {
             displayLosingMessage();
         }
-        // else if(this.countBombs() > 0)
-        // {
-        //     this.setLabel(numBombs);
-        // }
+        else if(this.countBombs(r, c) > 0)
+        {
+            int num = countBombs(r, c);
+            this.setLabel("" + num);
+        }
         else
             this.mousePressed();
     }
@@ -146,25 +155,22 @@ public class MSButton
     public int countBombs(int row, int col)
     {
         int numBombs = 0;
-        for(int r = -1; r <= 1; r++)
-        {
-            if(this.isValid(row-1, col-1)==true && bombs.contains(buttons[row-1][col-1]))
-                numBombs++;
-            if(this.isValid(row-1, col)==true && bombs.contains(buttons[row-1][col]))
-                numBombs++;
-            if(this.isValid(row-1, col+1)==true && bombs.contains(buttons[row-1][col+1]))
-                numBombs++;
-            if(this.isValid(row, col-1)==true && bombs.contains(buttons[row][col-1]))
-                numBombs++;
-            if(this.isValid(row, col+1)==true && bombs.contains(buttons[row][col+1]))
-                numBombs++;
-            if(this.isValid(row+1, col-1)==true && bombs.contains(buttons[row+1][col-1]))
-                numBombs++;
-            if(this.isValid(row+1, col)==true && bombs.contains(buttons[row+1][col]))
-                numBombs++;
-            if(this.isValid(row+1, col+1)==true && bombs.contains(buttons[row+1][col+1]))
-                numBombs++;
-        }
+        if(this.isValid(row-1, col-1)==true && bombs.contains(buttons[row-1][col-1]))
+            numBombs++;
+        if(this.isValid(row-1, col)==true && bombs.contains(buttons[row-1][col]))
+            numBombs++;
+        if(this.isValid(row-1, col+1)==true && bombs.contains(buttons[row-1][col+1]))
+            numBombs++;
+        if(this.isValid(row, col-1)==true && bombs.contains(buttons[row][col-1]))
+            numBombs++;
+        if(this.isValid(row, col+1)==true && bombs.contains(buttons[row][col+1]))
+            numBombs++;
+        if(this.isValid(row+1, col-1)==true && bombs.contains(buttons[row+1][col-1]))
+            numBombs++;
+        if(this.isValid(row+1, col)==true && bombs.contains(buttons[row+1][col]))
+            numBombs++;
+        if(this.isValid(row+1, col+1)==true && bombs.contains(buttons[row+1][col+1]))
+            numBombs++;
         return numBombs;
     }
 }
