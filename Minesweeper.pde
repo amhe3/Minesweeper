@@ -95,17 +95,18 @@ public class MSButton
     public void mousePressed () 
     {
         clicked = true;
+
         if(keyPressed == true && marked == true)
         {
-            marked = false;
-            if(this.isValid(r,c-1)==true && buttons[r][c-1].isMarked()) //left
-                buttons[r][c-1].mousePressed();
-            if(this.isValid(r,c-1)==true && buttons[r][c+1].isMarked()) //right
-                buttons[r][c+1].mousePressed();
-            if(this.isValid(r,c-1)==true && buttons[r-1][c].isMarked()) //up
-                buttons[r-1][c].mousePressed();
-            if(this.isValid(r,c-1)==true && buttons[r+1][c].isMarked()) //down
-                buttons[r+1][c].mousePressed();
+           marked = false;
+            // if(this.isValid(r,c-1)==true && buttons[r][c-1].isMarked()) //left
+            //     buttons[r][c-1].mousePressed();
+            // if(this.isValid(r,c-1)==true && buttons[r][c+1].isMarked()) //right
+            //     buttons[r][c+1].mousePressed();
+            // if(this.isValid(r,c-1)==true && buttons[r-1][c].isMarked()) //up
+            //     buttons[r-1][c].mousePressed();
+            // if(this.isValid(r,c-1)==true && buttons[r+1][c].isMarked()) //down
+            //     buttons[r+1][c].mousePressed(); 
         }
         else if(keyPressed == true && marked == false)
         {
@@ -146,6 +147,10 @@ public class MSButton
     public boolean isValid(int r, int c)
     {
         if(r>-1 && r<21 && c>-1 && c<21)
+        {
+            return true;
+        }
+        else if(r>-1 && r==20 && c>-1 && c==20)// r>-1 && r<21 && r==20 && c>-1 && c==20 && c<21
         {
             return true;
         }
