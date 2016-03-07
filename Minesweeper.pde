@@ -94,21 +94,8 @@ public class MSButton
     
     public void mousePressed () 
     {
-        clicked = true;
-
-        if(marked == true)
-        {
-            if(this.isValid(r,c-1)==true && buttons[r][c-1].isMarked()) //left
-                buttons[r][c-1].mousePressed();
-            if(this.isValid(r,c-1)==true && buttons[r][c+1].isMarked()) //right
-                buttons[r][c+1].mousePressed();
-            if(this.isValid(r,c-1)==true && buttons[r-1][c].isMarked()) //up
-                buttons[r-1][c].mousePressed();
-            if(this.isValid(r,c-1)==true && buttons[r+1][c].isMarked()) //down
-                buttons[r+1][c].mousePressed(); 
-            marked = false;
-        }
-        else if(keyPressed == true && marked == true)
+        clicked = true; 
+        if(keyPressed == true && marked == true)
         {
             marked = false;
         }
@@ -126,7 +113,16 @@ public class MSButton
             this.setLabel("" + num);
         }
         else
-            this.mousePressed();
+        {
+            if(this.isValid(r,c-1)==true && this.clicked(r,c-1) == false && buttons[r][c-1].isMarked()) //left
+                buttons[r][c-1].mousePressed();
+            if(this.isValid(r,c-1)==true && this.clicked(r,c+1) == false && buttons[r][c+1].isMarked()) //right
+                buttons[r][c+1].mousePressed();
+            if(this.isValid(r-1,c)==true && this.clicked(r-1,c) == false && buttons[r-1][c].isMarked()) //up
+                buttons[r-1][c].mousePressed();
+            if(this.isValid(r+1,c)==true && this.clicked(r+1,c) == false && buttons[r+1][c].isMarked()) //down
+                buttons[r+1][c].mousePressed();
+        }
     }
 
     public void draw () 
