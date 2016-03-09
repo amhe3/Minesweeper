@@ -1,5 +1,5 @@
 
-
+boolean loseShow = false;
 import de.bezier.guido.*;
 int NUM_ROWS = 20; 
 int NUM_COLS = 20;
@@ -8,7 +8,7 @@ private ArrayList <MSButton> bombs; //ArrayList of just the minesweeper buttons 
 
 void setup ()
 {
-    size(401, 401);
+    size(401, 451);
     textAlign(CENTER,CENTER);
     
     // make the manager
@@ -31,7 +31,7 @@ public void setBombs()
 {
     int ranRow = (int) (Math.random()* NUM_ROWS);
     int ranCol = (int) (Math.random()* NUM_COLS);
-    for(int bombNum = 1; bombNum <= (int)(Math.random()*10)+10; bombNum++)
+    for(int bombNum = 1; bombNum <= (int)(Math.random()*10)+40; bombNum++)
     {
         if(!bombs.contains(buttons[ranRow][ranCol]))
         {
@@ -48,19 +48,22 @@ public void draw ()
 }
 public boolean isWon()
 {
-    //your code here
+    
     return false;
 }
 public void displayLosingMessage()
 {
-    //your code here
-    background(0);
-    fill(255, 255, 255);
-    ellipse(200, 200, 100, 100);
+    fill(192, 192, 192);
+    textSize(50);
+    text("You Lose.", 200, 425);
+    textSize(12);
 }
 public void displayWinningMessage()
 {
-    //your code here
+    fill(192, 192, 192);
+    textSize(50);
+    text("You Win!", 200, 425);
+    textSize(12);
 }
 
 public class MSButton
@@ -105,7 +108,7 @@ public class MSButton
         }
         else if(bombs.contains(this))
         {
-            displayLosingMessage();
+            loseShow = true;
         }
         else if(this.countBombs(r, c) > 0)
         {
@@ -114,14 +117,23 @@ public class MSButton
         }
         else
         {
-            if(this.isValid(r,c-1)==true && this.clicked(r,c-1) == false && buttons[r][c-1].isMarked()) //left
+            if(this.isValid(r,c-1)==true && buttons[r][c-1].isClicked() == false) //left
                 buttons[r][c-1].mousePressed();
-            if(this.isValid(r,c-1)==true && this.clicked(r,c+1) == false && buttons[r][c+1].isMarked()) //right
+            if(this.isValid(r,c+1)==true && buttons[r][c+1].isClicked() == false) //right
                 buttons[r][c+1].mousePressed();
-            if(this.isValid(r-1,c)==true && this.clicked(r-1,c) == false && buttons[r-1][c].isMarked()) //up
+            if(this.isValid(r-1,c)==true && buttons[r-1][c].isClicked() == false) //up
                 buttons[r-1][c].mousePressed();
-            if(this.isValid(r+1,c)==true && this.clicked(r+1,c) == false && buttons[r+1][c].isMarked()) //down
+            if(this.isValid(r+1,c)==true && buttons[r+1][c].isClicked() == false) //down
                 buttons[r+1][c].mousePressed();
+            if(this.isValid(r-1,c-1)==true && buttons[r-1][c-1].isClicked() == false) //left top
+                buttons[r-1][c-1].mousePressed();
+            if(this.isValid(r-1,c+1)==true && buttons[r-1][c+1].isClicked() == false) //right top
+                buttons[r][c+1].mousePressed();
+            if(this.isValid(r+1,c-1)==true && buttons[r+1][c-1].isClicked() == false) //left bottom
+                buttons[r+1][c-1].mousePressed();
+            if(this.isValid(r+1,c+1)==true && buttons[r+1][c+1].isClicked() == false) //right bottom
+                buttons[r+1][c+1].mousePressed();
+
         }
     }
 
@@ -139,6 +151,15 @@ public class MSButton
         rect(x, y, width, height);
         fill(0);
         text(label,x+width/2,y+height/2);
+
+        if(loseShow == true)
+        {
+            displayLosingMessage();
+        }
+        if(isWon() == true)
+        {
+            displayWinningMessage();
+        }
     }
     public void setLabel(String newLabel)
     {
