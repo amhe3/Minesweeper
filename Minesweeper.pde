@@ -5,6 +5,7 @@ int NUM_ROWS = 20;
 int NUM_COLS = 20;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs; //ArrayList of just the minesweeper buttons that are mined
+int numBombsInGame = (int)(Math.random()*4)+1; //(int)(Math.random()*10)+40
 
 void setup ()
 {
@@ -31,7 +32,7 @@ public void setBombs()
 {
     int ranRow = (int) (Math.random()* NUM_ROWS);
     int ranCol = (int) (Math.random()* NUM_COLS);
-    for(int bombNum = 1; bombNum <= (int)(Math.random()*10)+40; bombNum++)
+    for(int bombNum = 1; bombNum <= numBombsInGame; bombNum++)
     {
         if(!bombs.contains(buttons[ranRow][ranCol]))
         {
@@ -43,24 +44,34 @@ public void setBombs()
 public void draw ()
 {
     background( 0 );
-    if(isWon())
+    if(loseShow == true)
+        displayLosingMessage();
+    if(isWon() == true)
         displayWinningMessage();
 }
 public boolean isWon()
 {
-    
-    return false;
+    int numMarked = 0;
+    for(int i = 0; i < bombs.size(); i++)
+    {
+        if(bombs.get(i).isMarked())
+            numMarked +=1;
+    }
+    if(numMarked == numBombsInGame)
+        return true;
+    else
+        return false;
 }
 public void displayLosingMessage()
 {
-    fill(192, 192, 192);
+    fill(244, 244, 244);
     textSize(50);
     text("You Lose.", 200, 425);
     textSize(12);
 }
 public void displayWinningMessage()
 {
-    fill(192, 192, 192);
+    fill(244, 244, 244);
     textSize(50);
     text("You Win!", 200, 425);
     textSize(12);
@@ -142,7 +153,7 @@ public class MSButton
         if (marked)
             fill(0);
          else if( clicked && bombs.contains(this) ) 
-             fill(255,0,0);
+            fill(255,0,0);
         else if(clicked)
             fill( 200 );
         else 
@@ -151,15 +162,6 @@ public class MSButton
         rect(x, y, width, height);
         fill(0);
         text(label,x+width/2,y+height/2);
-
-        if(loseShow == true)
-        {
-            displayLosingMessage();
-        }
-        if(isWon() == true)
-        {
-            displayWinningMessage();
-        }
     }
     public void setLabel(String newLabel)
     {
