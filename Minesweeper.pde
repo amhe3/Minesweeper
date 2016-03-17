@@ -1,11 +1,11 @@
 
-boolean loseShow = false;
 import de.bezier.guido.*;
 int NUM_ROWS = 20; 
 int NUM_COLS = 20;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs; //ArrayList of just the minesweeper buttons that are mined
-int numBombsInGame = (int)(Math.random()*4)+1; //(int)(Math.random()*10)+40
+int numBombsInGame = (int)(Math.random()*4)+5; //(int)(Math.random()*10)+40
+boolean loseShow = false;
 
 void setup ()
 {
@@ -54,8 +54,10 @@ public boolean isWon()
     int numMarked = 0;
     for(int i = 0; i < bombs.size(); i++)
     {
-        if(bombs.get(i).isMarked())
+        if(loseShow == false && bombs.get(i).isMarked())
+        {
             numMarked +=1;
+        }
     }
     if(numMarked == numBombsInGame)
         return true;
@@ -68,6 +70,8 @@ public void displayLosingMessage()
     textSize(50);
     text("You Lose.", 200, 425);
     textSize(12);
+    for(int i = 0; i < bombs.size(); i++)
+       bombs.get(i).mousePressed();
 }
 public void displayWinningMessage()
 {
