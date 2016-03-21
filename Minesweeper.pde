@@ -6,6 +6,7 @@ private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs; //ArrayList of just the minesweeper buttons that are mined
 int numBombsInGame = (int)(Math.random()*4)+5; //(int)(Math.random()*10)+40
 boolean loseShow = false;
+boolean cheat = false;
 
 void setup ()
 {
@@ -43,26 +44,33 @@ public void setBombs()
 
 public void draw ()
 {
-    background( 0 );
+    background(0);
     if(loseShow == true)
         displayLosingMessage();
     if(isWon() == true)
         displayWinningMessage();
+    if(cheat == true)
+    {
+        background(0);
+        textSize(50);
+        text("Don't Cheat!", 200, 425);
+        textSize(12);
+    }
 }
 public boolean isWon()
 {
     int numMarked = 0;
-    for(int i = 0; i < bombs.size(); i++)
+    for(int i = 0; i < bombs.size(); i++) //count the number of marked bombs
     {
         if(loseShow == false && bombs.get(i).isMarked())
         {
             numMarked +=1;
         }
     }
-    if(numMarked == numBombsInGame)
-        return true;
+    if(numMarked == numBombsInGame) //if all the bombs are marked
+        return true; //display message
     else
-        return false;
+        return false; //otherwise, do nothing
 }
 public void displayLosingMessage()
 {
@@ -70,8 +78,13 @@ public void displayLosingMessage()
     textSize(50);
     text("You Lose.", 200, 425);
     textSize(12);
-    for(int i = 0; i < bombs.size(); i++)
-       bombs.get(i).mousePressed();
+    for(int i = 0; i < bombs.size(); i++) //display unmarked bombs
+    {
+        if(!bombs.get(i).isMarked())
+            bombs.get(i).mousePressed();
+        if(keyPressed == true)
+            cheat = true;
+   }
 }
 public void displayWinningMessage()
 {
