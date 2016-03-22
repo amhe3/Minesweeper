@@ -4,7 +4,7 @@ int NUM_ROWS = 20;
 int NUM_COLS = 20;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs; //ArrayList of just the minesweeper buttons that are mined
-int numBombsInGame = (int)(Math.random()*4)+5; //(int)(Math.random()*10)+40
+int numBombsInGame = (int)(Math.random()*10)+40;
 boolean loseShow = false;
 boolean cheat = false;
 
